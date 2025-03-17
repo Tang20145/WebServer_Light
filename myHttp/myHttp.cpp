@@ -189,7 +189,9 @@ void myHttp::process()
     {
         closeConnection(); // 关闭连接自动重置一系列变量
     }
+    
     restartFdOneshot(myEpollfd, mySockfd, EPOLLOUT); // 等待可写事件触发
+    // 上面如果writeRet==false关闭连接后，在主函数会被epoll检测到不可写，自动删除相应的定时器
 }
 
 #pragma region 请求报文相关
@@ -339,6 +341,7 @@ myHttp::HTTP_CODE myHttp::decode_request_line(char *text)
 myHttp::HTTP_CODE myHttp::decode_headers(char *text)
 {
     // 判断空行还是请求头（如果是空行，\r\n应该已经被parse_line设置为\0\0，所以text[0]='\0'表示如果遇到空行，就说明请求头部已经被完全解析过了，现在是在解析消息体或者解析结尾阶段
+    // HTTP请求消息就算没有消息体最后都还是会有个空行
     if (text[0] == '\0')
     {
         // 日志
@@ -539,6 +542,7 @@ myHttp::HTTP_CODE myHttp::do_request()
 
         LOG_DEBUG("get username:%s,passwd:%s", username, passwd);
         LOG_FLUSH();
+
 
         // 注册
         if (flag == 'r')

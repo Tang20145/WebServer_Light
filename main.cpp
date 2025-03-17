@@ -48,7 +48,7 @@ OutTimerList outTimerList;      // 定时器链表
 
 #pragma region myHttp
 extern int setNonblock(int fd);
-extern void registerFd(int epollfd, int fd, bool oneShot);
+extern void registerFd(int epollfd, int fd, bool oneShot);// 来自myHttp.cpp
 extern void registerFd(int epollfd, int fd, bool oneShot);
 
 #pragma endregion
@@ -216,7 +216,7 @@ int main(int argc, char *argv[])
                 if (newFd < 0)
                 {
                     // 日志，连接失败
-                    LOG_INFO("new connection failed");
+                    LOG_ERROR("new connection failed");
                     LOG_FLUSH();
                     continue;
                 }
@@ -224,7 +224,7 @@ int main(int argc, char *argv[])
                 {
                     error_send(newFd, "server busy");
                     // 日志，连接过多
-                    LOG_INFO("refuse new connection , server connections reach upper limit");
+                    LOG_ERROR("refuse new connection , server connections reach upper limit");
                     LOG_FLUSH();
                     continue;
                 }

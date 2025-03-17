@@ -18,7 +18,7 @@ class threadPool
 {
 public:
     // 构造、析构
-    threadPool(mysqlPool *mysql_pool_, int max_thread_cnt_ = 8, int max_require_cnt_ = 10000);
+    threadPool(mysqlPool *mysql_pool_, int max_thread_cnt_ = 10, int max_require_cnt_ = 10000);
     ~threadPool();
 
     // 添加请求

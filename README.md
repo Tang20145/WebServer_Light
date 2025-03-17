@@ -1,0 +1,7 @@
+# WebServer
+
+> 参考项目：https://github.com/qinguoyi/TinyWebServer
+
+实现Linux下C++轻量级Web服务器，采用线程池技术及epoll端口复用技术，实现了服务器的高性能、高并发。
+
+经过webbench压力测试可实现上百QPS（每秒查询），使用的是腾讯云微服务器性能比较差了 :(
